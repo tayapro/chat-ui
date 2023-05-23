@@ -5,9 +5,10 @@
             <ChatMessage text="jopa" sender="bot" />
             <ChatMessage text="hello, jopa!!!" />
             <ChatMessage
-                v-for="message in messages"
-                :key="message"
-                :text="message"
+                v-for="m in messages"
+                :key="m.text"
+                :text="m.text"
+                :sender="m.sender"
             ></ChatMessage>
         </div>
         <div class="card-footer fixed-bottom border-0">
@@ -33,7 +34,14 @@ export default {
     methods: {
         addMessage(msg) {
             console.log('function bla', msg)
-            this.messages.push(msg)
+            this.messages.push({
+                text: msg,
+                sender: 'hooman',
+            })
+            this.messages.push({
+                text: 'hello from bot',
+                sender: 'bot',
+            })
         },
     },
 }
