@@ -2,13 +2,14 @@
     <div class="card text-center border-0">
         <!-- <div class="card-header border-0"></div> -->
         <div class="card-body">
-            <ChatMessage text="jopa" sender="bot" />
+            <ChatMessage text="jopa" displayName="JopaBot" senderType="bot" />
             <ChatMessage text="hello, jopa!!!" />
             <ChatMessage
                 v-for="m in messages"
                 :key="m.text"
                 :text="m.text"
-                :sender="m.sender"
+                :senderType="m.senderType"
+                :displayName="m.displayName"
             ></ChatMessage>
         </div>
         <div class="card-footer fixed-bottom border-0">
@@ -26,21 +27,23 @@ export default {
     data() {
         return {
             // .text
-            // .sender
+            // .senderType
+            // .displayName
             messages: [],
         }
     },
     components: { InputMessage, ChatMessage },
     methods: {
-        addMessage(msg) {
-            console.log('function bla', msg)
+        async addMessage(msg) {
             this.messages.push({
                 text: msg,
                 sender: 'hooman',
             })
+            const message = await this.aiapi.botMessage()
             this.messages.push({
-                text: 'hello from bot',
-                sender: 'bot',
+                text: message.text.data,
+                displayName: message.sender.data,
+                senderType: 'bot',
             })
         },
     },

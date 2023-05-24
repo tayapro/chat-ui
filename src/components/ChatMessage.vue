@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isBot()" class="text-end">{{ text }}</div>
+    <div v-if="isBot()" class="text-end">{{ printMessage() }}</div>
     <div v-else class="text-start">{{ text }}</div>
 </template>
 
@@ -8,14 +8,18 @@ export default {
     name: 'ChatMessage',
     props: {
         text: String,
-        sender: String,
+        senderType: String,
+        displayName: String,
     },
     data() {
         return {}
     },
     methods: {
         isBot() {
-            return this.sender === 'bot'
+            return this.senderType === 'bot'
+        },
+        printMessage() {
+            return `${this.displayName}: ${this.text}`
         },
     },
 }
