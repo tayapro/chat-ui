@@ -4,7 +4,6 @@ import random from 'random'
 async function botMessage() {
     try {
         let botmessage = { sender: '', text: '' }
-        console.log('from AiApi file: Empty bot msg = ', botmessage)
         botmessage.sender = await axios.get(
             `http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/api/name`
         )
@@ -19,7 +18,7 @@ async function botMessage() {
                 },
             }
         )
-        console.log('from AiApi file: Bot message = ', botMessage)
+        // console.log('from AiApi file: Bot message = ', botMessage)
         return botmessage
     } catch (e) {
         console.error('ERROR :::', e)
