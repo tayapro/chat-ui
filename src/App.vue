@@ -3,13 +3,16 @@
         <!-- <div class="card-header border-0"></div> -->
         <div class="card-body">
             <ChatMessage text="jopa" displayName="JopaBot" senderType="bot" />
+            <ChatMessage text="pisja" displayName="PisjaBot" senderType="bot" />
+            <ChatMessage text="kto nassal?" displayName="" senderType="bot" />
+            <ChatMessage text="" displayName="" senderType="bot" />
+            <ChatMessage senderType="bot" />
+
             <ChatMessage text="hello, jopa!!!" />
             <ChatMessage
                 v-for="m in messages"
                 :key="m.text"
-                :text="m.text"
                 :senderType="m.senderType"
-                :displayName="m.displayName"
             ></ChatMessage>
         </div>
         <div class="card-footer fixed-bottom border-0">
@@ -39,10 +42,8 @@ export default {
                 text: msg,
                 sender: 'hooman',
             })
-            const message = await this.aiapi.botMessage()
+            // добавить вероятность ~ 60% ответа от бота (несколько моих сообщений - одно сообщение от бота)
             this.messages.push({
-                text: message.text.data,
-                displayName: message.sender.data,
                 senderType: 'bot',
             })
         },

@@ -24,6 +24,7 @@ export default {
     },
     data() {
         return {
+            message: {},
             botMsgReady: false,
         }
     },
@@ -32,21 +33,36 @@ export default {
             return this.senderType === 'bot'
         },
         printMessage() {
-            return `${this.displayName}: ${this.text}`
+            return `${this.message.displayName}: ${this.message.text}`
         },
         isBotMessageReady() {
             return this.botMsgReady
         },
     },
     async mounted() {
-        // setTimeout(() => {
-        //     this.botMsgReady = true
-        // }, 1000)
+        if (!this.isBot()) {
+            return
+        }
+
+        if (this.displayName || this.displayName === '')
+            this.message.displayName = this.displayName
+        if (this.text || this.text === '') this.message.text = this.text
+
+        if ('displayName' in this.message || 'text' in this.message) {
+            this.botMsgReady = true
+            return
+        }
+
         await new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
             }, 1000)
         })
+
+        const res = await this.aiapi.botMessage()
+        this.message.displayName = res.sender.data
+        this.message.text = res.text.data
+
         this.botMsgReady = true
     },
 }
