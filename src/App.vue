@@ -2,16 +2,17 @@
     <div class="card text-center border-0">
         <!-- <div class="card-header border-0"></div> -->
         <div class="card-body">
-            <ChatMessage text="jopa" displayName="JopaBot" senderType="bot" />
-            <ChatMessage text="pisja" displayName="PisjaBot" senderType="bot" />
-            <ChatMessage text="kto nassal?" displayName="" senderType="bot" />
-            <ChatMessage text="" displayName="" senderType="bot" />
-            <ChatMessage senderType="bot" />
+            <ChatMessage
+                text="Hello there!"
+                displayName="Bot"
+                senderType="bot"
+            />
+            <ChatMessage text="hello, Bot!!!" />
 
-            <ChatMessage text="hello, jopa!!!" />
             <ChatMessage
                 v-for="m in messages"
                 :key="m.text"
+                :text="m.text"
                 :senderType="m.senderType"
             ></ChatMessage>
         </div>
@@ -40,7 +41,7 @@ export default {
         async addMessage(msg) {
             this.messages.push({
                 text: msg,
-                sender: 'hooman',
+                // sender: 'hooman',
             })
             // добавить вероятность ~ 60% ответа от бота (несколько моих сообщений - одно сообщение от бота)
             this.messages.push({
@@ -52,6 +53,12 @@ export default {
 </script>
 
 <style>
+.card-body {
+    background-color: #74ebd5;
+    background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
+    min-height: 100vh;
+}
+
 #msg-list {
     list-style-type: none;
 }
