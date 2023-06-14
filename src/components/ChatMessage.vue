@@ -74,6 +74,7 @@ export default {
         text: String,
         senderType: String,
         displayName: String,
+        msgType: String,
     },
     data() {
         return {
@@ -98,9 +99,9 @@ export default {
             return this.botMsgReady
         },
         printBotAvatar() {
-            console.log(this.message.avatar)
+            // displays an interactive list of the properties of the specified JavaScript object
+            // console.dir(this.message.avatar)
             return `data:image/png;base64,${this.message.avatar}`
-            // return './1.png'
         },
     },
     async mounted() {
@@ -123,13 +124,10 @@ export default {
             }, 500)
         })
 
-        const res = await this.aiapi.botMessage()
+        const res = await this.aiapi.botMessage(this.msgType)
         this.message.displayName = res.sender.data
         this.message.text = res.text.data
         this.message.avatar = res.avatar.data
-        console.log(`res avatar = ${res.avatar.data}`)
-
-        console.log(`Message (ChatMessage) >>> ${this.message.avatar}`)
 
         this.botMsgReady = true
     },

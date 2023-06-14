@@ -3,17 +3,11 @@
         <!-- <div class="card-header border-0"></div> -->
         <div class="card-body">
             <ChatMessage
-                text="Hello there!"
-                displayName="Bot"
-                senderType="bot"
-            />
-            <ChatMessage text="hello, Bot!!!" />
-
-            <ChatMessage
                 v-for="m in messages"
                 :key="m.text"
                 :text="m.text"
                 :senderType="m.senderType"
+                :msgType="m.msgType"
             ></ChatMessage>
         </div>
         <div class="card-footer fixed-bottom border-0">
@@ -48,6 +42,12 @@ export default {
                 senderType: 'bot',
             })
         },
+    },
+    created() {
+        this.messages.push({
+            senderType: 'bot',
+            msgType: 'greeting',
+        })
     },
 }
 </script>
