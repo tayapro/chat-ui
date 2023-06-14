@@ -6,8 +6,15 @@
                 <div v-if="isBot()" class="col-5 m-2">
                     <div v-if="isBotMessageReady()">
                         <div class="media text-md-start">
-                            <div class="media-heading">
-                                <p class="text-muted my-1 text-start">
+                            <div class="media-heading d-flex">
+                                <img
+                                    :src="printBotAvatar()"
+                                    alt="user"
+                                    width="30"
+                                    class="rounded-circle m-1"
+                                />
+                                <!-- <img :src="printBotAvatar()" /> -->
+                                <p class="text-muted m-1 text-start">
                                     {{ printBotName() }}
                                 </p>
                             </div>
@@ -38,8 +45,6 @@
                 </div>
                 <div v-if="isBot()" class="col-5"></div>
 
-                <!-- <div class="col-1"></div> -->
-
                 <!-- hooman message-->
                 <div v-if="!isBot()" class="col-5 m-2"></div>
                 <div v-if="!isBot()" class="col-5 m-2">
@@ -47,9 +52,7 @@
                         <div class="media-heading"></div>
                         <div class="media-body ml-3">
                             <div class="bg-light rounded py-2 px-3">
-                                <p
-                                    class="text-start text-small mb-0 text-muted"
-                                >
+                                <p class="text-end text-small mb-0 text-muted">
                                     {{ printHoomanMessage() }}
                                 </p>
                             </div>
@@ -62,41 +65,6 @@
             </div>
         </div>
     </section>
-
-    <!-- ========================================================================= -->
-
-    <!-- <div class="container">
-        <div class="column">
-            <div v-if="isBot()" class="media w-50 ml-auto mb-3">
-                <div class="media-body">
-                    <div class="bg-primary rounded py-2 px-3 mb-2">
-                        <p class="text-small mb-0 text-white">
-                            {{ printMessage() }}
-                        </p>
-                    </div>
-                    <p class="small text-muted">12:00 PM | Aug 13</p>
-                </div>
-            </div>
-            <div v-else class="media float-end w-50 mb-3"> -->
-    <!-- <div class="media-heading">
-                    <img
-                        src="https://therichpost.com/wp-content/uploads/2020/06/avatar2.png"
-                        alt="user"
-                        width="50"
-                        class="rounded-circle"
-                    />
-                    <p class="small text-muted">12:00 PM | Aug 13</p>
-                </div> -->
-    <!-- <div class="media-body ml-3">
-                    <div class="bg-light rounded py-2 px-3 mb-2">
-                        <p class="text-start text-small mb-0 text-muted">
-                            {{ text }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -129,6 +97,11 @@ export default {
         isBotMessageReady() {
             return this.botMsgReady
         },
+        printBotAvatar() {
+            console.log(this.message.avatar)
+            return `data:image/png;base64,${this.message.avatar}`
+            // return './1.png'
+        },
     },
     async mounted() {
         if (!this.isBot()) {
@@ -147,12 +120,16 @@ export default {
         await new Promise((resolve) => {
             setTimeout(() => {
                 resolve()
-            }, 1000)
+            }, 500)
         })
 
         const res = await this.aiapi.botMessage()
         this.message.displayName = res.sender.data
         this.message.text = res.text.data
+        this.message.avatar = res.avatar.data
+        console.log(`res avatar = ${res.avatar.data}`)
+
+        console.log(`Message (ChatMessage) >>> ${this.message.avatar}`)
 
         this.botMsgReady = true
     },
