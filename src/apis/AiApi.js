@@ -24,8 +24,13 @@ async function botMessage(msg_type) {
                 }
             )
         }
-        botmessage.avatar = await axios.get(
-            `http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/api/avatar`
+
+        const name = botmessage.sender.data
+        botmessage.avatar = await axios.post(
+            `http://${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}/api/avatar`,
+            {
+                sender_name: name,
+            }
         )
         return botmessage
     } catch (e) {

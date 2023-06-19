@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <p class="small text-muted my-1 text-start">
-                                12:00 PM | Aug 13
+                                {{ printTime() }}
                             </p>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <p class="small text-muted my-1 text-end">
-                            12:00 PM | Aug 13
+                            {{ printTime() }}
                         </p>
                     </div>
                 </div>
@@ -101,7 +101,36 @@ export default {
         printBotAvatar() {
             // displays an interactive list of the properties of the specified JavaScript object
             // console.dir(this.message.avatar)
+
             return `data:image/png;base64,${this.message.avatar}`
+        },
+        printTime() {
+            let date_time = new Date()
+
+            // get current date
+            // adjust 0 before single digit date
+            const date = ('0' + date_time.getDate()).slice(-2)
+
+            // get current month
+            const month = ('0' + (date_time.getMonth() + 1)).slice(-2)
+
+            // get current year
+            const year = date_time.getFullYear()
+
+            // get current hours
+            const hours = date_time.getHours()
+
+            // get current minutes
+            const minutes = date_time.getMinutes()
+
+            // get current seconds
+            //const seconds = date_time.getSeconds()
+
+            // prints date & time in YYYY-MM-DD HH:MM:SS format
+            const current_time =
+                year + '-' + month + '-' + date + ' ' + hours + ':' + minutes
+
+            return current_time
         },
     },
     async mounted() {
